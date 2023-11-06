@@ -1,0 +1,44 @@
+export default {
+
+  
+  async fetch(request) {
+    // @ts-ignore
+    let alinktext=request.cf.country.toLowerCase();
+    let urltxt="https://cloudflair.uk/"+alinktext+".jpg"
+   // @ts-ignore
+   let html_link_style="<a href="+urltxt+">"+alinktext+"</a>";
+    
+
+
+    let html_content = "";
+    
+    let html_style =
+      "body{padding:6em; font-family: sans-serif;} h1{color:#f6821f;}";
+
+    html_content += "<p> Authorized at : " + request.user + "</p>";
+    
+
+    html_content += "<p> Region: " + request.cf.region + "</p>";
+    html_content += "<p> Timezone: " + request.cf.timezone + "</p>";
+    html_content += "<p> Country Flag URL :</p> ";
+ 
+
+    let html = `<!DOCTYPE html>
+      <head>
+        <title> Swapnil Mantri: Cloudflare Workers </title>
+        <style> ${html_style} </style>
+      </head>
+      <body>
+        <h1>Swapnil Mantri: Cloudflare Workers</h1>
+        <p>You now have access to geolocation data about where your user is visiting from.</p>
+        ${html_content} 
+        ${html_link_style}
+      </body>`;
+
+    return new Response(html, {
+      headers: {
+        "content-type": "text/html;charset=UTF-8",
+      },
+    });
+  },
+};
